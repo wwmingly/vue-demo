@@ -1,0 +1,15 @@
+// header
+$headerBackground: #5f9ea0;
+$headerColor: #ffffff;
+$headerBorder: #68b0b3;
+
+// MenuLeft.vue
+$menuBackgroundColor: #5a5a5a; // 背景颜色
+$menuTextColor: #fff; // 文字颜色
+$menuActiveTextColor: #ffd04b; // 文字选中颜色
+
+:export {
+  menuBackgroundColor: $menuBackgroundColor;
+  menuTextColor: $menuTextColor;
+  menuActiveTextColor: $menuActiveTextColor;
+}
