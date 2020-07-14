@@ -15,18 +15,28 @@ export default new Router({
       }
     },
     {
-      path: '/layout',
+      path: '/Layout',
       name: 'Layout',
       component: Layout,
       meta: {
-        title: 'vue',
+        title: 'Layout',
         icon: 'el-icon-tickets',
-        showMenu: true // 是否显示
+        showMenu: true
       },
       children: [
-        // 左侧菜单中的所有路由出口
+        {
+          path: '/index',
+          name: 'Index',
+          component: () => import('@/views/index/index'),
+          meta: {
+            title: '首页',
+            icon: 'el-icon-tickets',
+            showMenu: true
+          }
+        },
         ...vueRouter
       ]
-    }
+    },
+    
   ]
 })

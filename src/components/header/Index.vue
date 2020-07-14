@@ -1,15 +1,15 @@
 <template>
   <div class="header_index-container">
     <div class="header-left">
-      <span class="el-icon-d-arrow-left header-icon white-color"></span>
+      <span @click.prevent="control" :class="`el-icon-d-arrow-${isCollapse?'right':'left'} header-icon white-color`"></span>
       <span class="header-text white-color">欢迎登陆！</span>
     </div>
     <div class="header-right white-color">
       <el-dropdown>
         <i class="el-icon-setting white-color mr15"></i>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>注册</el-dropdown-item>
-          <el-dropdown-item>登陆</el-dropdown-item>
+          <el-dropdown-item>我的</el-dropdown-item>
+          <!-- <el-dropdown-item>登陆</el-dropdown-item> -->
           <el-dropdown-item>退出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -19,7 +19,17 @@
 </template>
 <script>
 export default {
-  name: "Header"
+  name: "Header",
+  computed: {
+    isCollapse() {
+      return this.$store.state.isCollapse;
+    }
+  },
+  methods: {
+    control() {
+      this.$store.commit("isCollapse", !this.$store.state.isCollapse);
+    }
+  }
 };
 </script>
 <style lang="scss">

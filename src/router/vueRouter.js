@@ -1,16 +1,10 @@
-export default [{
-  path: '/index',
-  name: 'Index',
-  component: () => import('@/views/index/index'),
-  meta: {
-    title: '首页',
-    icon: 'el-icon-tickets',
-    showMenu: true
-  }
-},
+
+
+const router = [
 {
   path: '/vue',
   name: 'vue',
+  component: () => import('@/components/layout/Container'),
   meta: {
     title: 'vue',
     icon: 'el-icon-tickets',
@@ -25,7 +19,7 @@ export default [{
       icon: 'el-icon-tickets',
       showMenu: true
     }
-  },{
+  }, {
     path: '/vueRouter',
     name: 'VueRouter',
     component: () => import('@/views/vue/vueRouter/vueRouter'),
@@ -34,7 +28,7 @@ export default [{
       icon: 'el-icon-tickets',
       showMenu: true
     }
-  },{
+  }, {
     path: '/vueVuex',
     name: 'VueVuex',
     component: () => import('@/views/vue/vueVuex/vueVuex'),
@@ -45,3 +39,4 @@ export default [{
     }
   }]
 }]
+export default router

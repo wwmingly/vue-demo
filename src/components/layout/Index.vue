@@ -1,6 +1,6 @@
 <template>
   <el-container class="layout_layout-container">
-    <el-aside class="_el-aside" width="200px">
+    <el-aside class="_el-aside" :width="`${isCollapse?60:200}px`">
       <menu-left></menu-left>
     </el-aside>
     <el-container>
@@ -18,7 +18,12 @@ import MenuLeft from "./components/MenuLeft";
 import ComHeader from "../header/Index";
 export default {
   name: "Layout",
-  components: { MenuLeft, ComHeader }
+  components: { MenuLeft, ComHeader },
+  computed: {
+    isCollapse() {
+      return this.$store.state.isCollapse;
+    }
+  }
 };
 </script>
 <style lang="scss">

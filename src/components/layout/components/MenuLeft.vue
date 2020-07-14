@@ -11,17 +11,16 @@
     :active-text-color="variable.menuActiveTextColor"
     ref="leftNavigation"
   >
-    <!-- <template v-for="(item,index)  in $router.options.routes"> -->
-    <template>
-      <MenuNav :menuData="entrance"></MenuNav>
+    <template v-for="(item,index) in $router.options.routes">
+      <template v-if="item.meta.showMenu&&item.children">
+        <MenuNav :key="index" :menuData="item.children"></MenuNav>
+      </template>
     </template>
-    <!-- </template> -->
   </el-menu>
 </template>
 
 <script>
 import MenuNav from "./MenuNav";
-import entrance from "./../../../router/entrance";
 import variable from "@/assets/styles/variable.scss";
 // import debounce from "@/common/debounce";
 
@@ -35,26 +34,22 @@ export default {
   computed: {
     // 侧边导航栏是否打开
     isCollapse() {
-      // return this.$store.state.isCollapse;
-      return false;
+      return this.$store.state.isCollapse;
     },
     // 标签路由栈
     tabList() {
-      return "home";
+      return "Index";
     },
     // 当前被激活的tab标签
     activeTabsName() {
-      return "home";
+      return "Index";
     },
     // 当前所在的模块
     menuModule() {
-      return "home";
+      return "Index";
     },
     variable() {
       return variable;
-    },
-    entrance() {
-      return entrance;
     }
   },
   components: {
@@ -109,10 +104,10 @@ export default {
      */
     select(index) {
       // // 路由不相等的时候push(解决路由相等时报错问题)
-      // if (this.$route.path !== index) this.$router.push(index);
-      // // 当前选中的标签被选中
-      // this.$store.commit("activeTabsName", this.$route.name);
-      // // 判断之前路由栈里没有此路由对象,否则不入栈
+      if (this.$route.path !== index) this.$router.push(index);
+      // 当前选中的标签被选中
+      this.$store.commit("activeTabsName", this.$route.name);
+      // 判断之前路由栈里没有此路由对象,否则不入栈
       // if (this.tabList.every(item => item.path !== this.$route.path)) {
       //   this.tabList.push(this.$route);
       //   this.$store.commit("tabList", this.tabList);
