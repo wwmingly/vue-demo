@@ -37,12 +37,8 @@ export default {
       return this.$store.state.isCollapse;
     },
     // 标签路由栈
-    tabList() {
-      return "Index";
-    },
-    // 当前被激活的tab标签
-    activeTabsName() {
-      return "Index";
+    routerTabs() {
+      return this.$store.state.routerTabs;
     },
     // 当前所在的模块
     menuModule() {
@@ -50,6 +46,11 @@ export default {
     },
     variable() {
       return variable;
+    }
+  },
+  watch: {
+    $route(val) {
+      this.select(val.path);
     }
   },
   components: {
@@ -104,14 +105,14 @@ export default {
      */
     select(index) {
       // // 路由不相等的时候push(解决路由相等时报错问题)
-      if (this.$route.path !== index) this.$router.push(index);
-      // 当前选中的标签被选中
-      this.$store.commit("activeTabsName", this.$route.name);
+      if (this.$route.path !== index) {
+        this.$router.push(index);
+      }
       // 判断之前路由栈里没有此路由对象,否则不入栈
-      // if (this.tabList.every(item => item.path !== this.$route.path)) {
-      //   this.tabList.push(this.$route);
-      //   this.$store.commit("tabList", this.tabList);
-      // }
+      if (this.routerTabs.every(item => item.path !== this.$route.path)) {
+        this.routerTabs.push(this.$route);
+        this.$store.commit("routerTabs", this.routerTabs);
+      }
     },
 
     /**
