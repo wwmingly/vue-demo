@@ -111,5 +111,9 @@ export default {
     height: calc(100vh - 101px);
     overflow: auto;
   }
+  .el-tabs__item:hover,
+  .el-tabs__item.is-active {
+    color: #5f9ea0;
+  }
 }
 </style>

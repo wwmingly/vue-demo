@@ -1,8 +1,9 @@
+// 主题色
+$themeColor: #5f9ea0; // 主题色
 // header
-$headerBackground: #5f9ea0;
-$headerColor: #ffffff;
-$headerBorder: #68b0b3;
-
+$headerColor: #ffffff; // 头部的文字颜色
+$headerBorder: #68b0b3; // 头部的分割线
+$headerBackground: $themeColor; // 头部的背景色
 // MenuLeft.vue
 $menuBackgroundColor: #5a5a5a; // 背景颜色
 $menuTextColor: #fff; // 文字颜色

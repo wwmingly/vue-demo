@@ -6,7 +6,7 @@
     </div>
     <div class="header-right white-color">
       <el-dropdown>
-        <i class="el-icon-setting white-color mr15"></i>
+        <i class="el-icon-user-solid white-color mr15"></i>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>我的</el-dropdown-item>
           <!-- <el-dropdown-item>登陆</el-dropdown-item> -->

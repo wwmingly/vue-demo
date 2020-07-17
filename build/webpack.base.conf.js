@@ -47,6 +47,17 @@ module.exports = {
         options: vueLoaderConfig
       },
       {
+        test: /\.md$/,
+        use: [
+          {
+            loader: 'vue-loader',
+          },
+          {
+            loader: require.resolve('./loader/markdown-loader'),
+          },
+        ],
+      },
+      {
         test: /\.sass$/,
         loaders: ['style', 'css', 'sass']
       },
