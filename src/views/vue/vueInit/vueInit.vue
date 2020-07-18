@@ -17,32 +17,14 @@
         </my-test>
       </template>
     </small-layout>
-    <!-- <draggable-dialog
-      class="layout-guide"
-      :bottom="30"
-      :right="30"
-      :width="300"
-      :offset="[100,0,0,200]"
-    >
-      <template slot="header">
-        <div class="guide-catalog">
-          <span>目录</span>
-        </div>
-      </template>
-      <template slot="body">
-        <div class="guide-list">123</div>
-      </template>
-    </draggable-dialog>-->
   </div>
 </template>
 <script>
-import draggableDialog from "@/components/draggableDialog/Index";
 import smallLayout from "@/components/smallLayout/Index";
 import comTree from "@/components/tree/Index";
 export default {
   name: "VueInit",
   components: {
-    draggableDialog,
     smallLayout,
     comTree,
     myTest: () => import("./markdown/test.md")
@@ -61,16 +43,163 @@ export default {
               level: 2,
               children: [
                 {
-                  label: "第一步",
+                  label: "项目初始化",
                   id: "1_1_1",
                   level: 3
                 },
                 {
-                  label: "第二步",
+                  label: "配置scss/less-loader",
                   id: "1_1_2",
+                  level: 3
+                },
+                {
+                  label: "引入ElementUI",
+                  id: "1_1_3",
+                  level: 3
+                },
+                {
+                  label: "字体",
+                  id: "1_1_4",
+                  level: 3
+                },
+                {
+                  label: "搭建布局",
+                  id: "1_1_5",
+                  level: 3
+                },
+                {
+                  label: "样式抽取",
+                  id: "1_1_6",
+                  level: 3
+                },
+                {
+                  label: "路由配置",
+                  id: "1_1_7",
+                  level: 3
+                },
+                {
+                  label: "vuex管理",
+                  id: "1_1_8",
+                  level: 3
+                },
+                {
+                  label: "axios",
+                  id: "1_1_9",
+                  level: 3
+                },
+                {
+                  label: "优化",
+                  id: "1_1_10",
+                  level: 3
+                },
+                {
+                  label: "基本骨架，及效果",
+                  id: "1_1_11",
                   level: 3
                 }
               ]
+            },
+            {
+              label: "项目环境配置",
+              id: "1_2",
+              level: 2,
+              children: [
+                {
+                  label: "webpack配置",
+                  id: "1_2_1",
+                  level: 3
+                },
+                {
+                  label: "环境变量配置",
+                  id: "1_2_2",
+                  level: 3
+                }
+              ]
+            },
+            {
+              label: "eslint",
+              id: "1_3",
+              level: 2,
+              children: [
+                {
+                  label: "vscode配置与插件推荐",
+                  id: "1_3_1",
+                  level: 3
+                },
+                {
+                  label: ".eslintrc.js文件",
+                  id: "1_3_2",
+                  level: 3
+                }
+              ]
+            },
+            {
+              label: "插件",
+              id: "1_4",
+              level: 2,
+              children: [
+                {
+                  label: "echarts",
+                  id: "1_4_1",
+                  level: 3
+                }
+              ]
+            }
+          ]
+        },
+        {
+          // 当修改的文件，再此添加即可
+          label: "工程文件",
+          id: "2",
+          level: 1,
+          children: [
+            {
+              label: "build",
+              id: "2_1",
+              level: 2,
+              children: [
+                { label: "webpack.base.conf.js", id: "2_1_1", level: 3 }
+              ]
+            },
+            {
+              label: "config",
+              id: "2_2",
+              level: 2
+            },
+            {
+              label: "src",
+              id: "2_3",
+              level: 2
+            },
+            {
+              label: "static",
+              id: "2_4",
+              level: 2
+            },
+            {
+              label: ".babelrc",
+              id: "2_5",
+              level: 2
+            },
+            {
+              label: ".editorconfig",
+              id: "2_6",
+              level: 2
+            },
+            {
+              label: ".eslintrc.js",
+              id: "2_7",
+              level: 2
+            },
+            {
+              label: ".postcssrc.js",
+              id: "2_8",
+              level: 2
+            },
+            {
+              label: "package.json",
+              id: "2_9",
+              level: 2
             }
           ]
         }
@@ -98,22 +227,6 @@ export default {
     position: relative;
     left: -20px;
     border-left: 2px solid #5f9ea0;
-  }
-  .layout-guide {
-    box-shadow: 0 0 10px #eee;
-    background: #fff;
-
-    .guide-catalog {
-      height: 40px;
-      line-height: 40px;
-      background: #eee;
-      padding: 0 10px;
-    }
-    .guide-list {
-      min-height: 200px;
-      box-sizing: border-box;
-      padding: 10px;
-    }
   }
 }
 </style>

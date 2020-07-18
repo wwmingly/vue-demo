@@ -3,6 +3,23 @@
     <!-- :width="`${isCollapse?60:200}px`" -->
     <transition name="slide-fade">
       <el-aside class="_el-aside" :style="`max-width:${isCollapse?60:200}px`">
+        <div class="logo-container">
+          <div class="logo-image">
+            <el-image class="logo-r" :src="require(`../../assets/images/logo-r.png`)">
+              <div slot="placeholder" class="image-slot">
+                vvmily
+                <span class="dot">vvmily</span>
+              </div>
+            </el-image>
+            <el-image class="logo-v" :src="require(`../../assets/images/logo-v.png`)">
+              <div slot="placeholder" class="image-slot">
+                vvmily
+                <span class="dot">vvmily</span>
+              </div>
+            </el-image>
+          </div>
+          <div v-if="!isCollapse" class="logo-txt">vvmily</div>
+        </div>
         <menu-left></menu-left>
       </el-aside>
     </transition>
@@ -94,8 +111,48 @@ export default {
 .layout_layout-container {
   height: 100%;
   ._el-aside {
-    overflow-x: hidden;
-    height: 100%;
+    overflow: hidden;
+    border-right: 1px solid $headerBorder;
+    // height: calc(100% - 60px);
+  }
+  .logo-container {
+    display: flex;
+    height: 60px;
+    background: $headerBackground;
+    justify-content: center;
+    align-items: center;
+    .logo-image {
+      position: relative;
+      height: 60px;
+      width: 60px;
+      overflow: hidden;
+      .logo-v {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0px;
+        left: 0px;
+      }
+
+      .logo-r {
+        animation: myfirst1 5s linear infinite;
+      }
+      @keyframes myfirst1 {
+        0% {
+          transform: rotate(0deg);
+        }
+        50% {
+          transform: rotate(180deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    }
+    .logo-txt {
+      font-size: 30px;
+      color: #fff;
+    }
   }
   .el-main {
     padding: 0;

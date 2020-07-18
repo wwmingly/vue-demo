@@ -2,6 +2,7 @@
   <div class="tree_index_container">
     <el-input placeholder="请输入" v-model="filterText"></el-input>
     <el-tree
+      class="_el-tree no_scroll_box"
       ref="tree"
       v-bind="$attrs"
       v-on="$listeners"
@@ -70,6 +71,12 @@ export default {
 <style lang="scss">
 @import "../../assets/styles/variable";
 .tree_index_container {
+  height: 100%;
+  ._el-tree {
+    height: calc(100% - 20px);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
   .el-tree-node__expand-icon:not(.is-leaf) {
     color: $themeColor;
   }

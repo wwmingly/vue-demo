@@ -1,7 +1,7 @@
  <template>
   <el-menu
     :default-active="$route.path"
-    class="el-menu-vertical-demo"
+    class="el-menu-vertical-demo no_scroll_box"
     @open="handleOpen"
     @close="handleClose"
     :collapse="isCollapse"
@@ -152,6 +152,8 @@ export default {
   min-height: 400px;
 }
 .el-menu-vertical-demo {
-  height: 100%;
+  height: calc(100% - 60px);
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 </style>

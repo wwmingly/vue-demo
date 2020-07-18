@@ -1,10 +1,19 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import vueRouter from './vueRouter'
+import toolsRouter from './toolsRouter'
 import Layout from '../components/layout/Index'
 Vue.use(Router)
 export default new Router({
   routes: [
+    {
+      path: '*', // 没有匹配的所有地址，都重定向到登录页面
+      redirect: '/login',
+      meta: {
+        title: '登录',
+        showMenu: false
+      }
+    },
     {
       path: '/login',
       name: 'Login',
@@ -34,9 +43,10 @@ export default new Router({
             showMenu: true
           }
         },
-        ...vueRouter
+        ...vueRouter,
+        ...toolsRouter
       ]
     },
-    
+
   ]
 })
