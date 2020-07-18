@@ -1,16 +1,19 @@
 <template>
   <div class="header_index-container">
     <div class="header-left">
-      <span @click.prevent="control" :class="`el-icon-d-arrow-${isCollapse?'right':'left'} header-icon white-color`"></span>
+      <span
+        @click.prevent="control"
+        :class="`el-icon-d-arrow-${isCollapse?'right':'left'} header-icon white-color`"
+      ></span>
       <span class="header-text white-color">欢迎登陆！</span>
     </div>
     <div class="header-right white-color">
-      <el-dropdown>
+      <el-dropdown @command="outLogin">
         <i class="el-icon-user-solid white-color mr15"></i>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>我的</el-dropdown-item>
           <!-- <el-dropdown-item>登陆</el-dropdown-item> -->
-          <el-dropdown-item>退出</el-dropdown-item>
+          <el-dropdown-item :command="'/login'">退出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
       <span>vvmily</span>
@@ -28,6 +31,11 @@ export default {
   methods: {
     control() {
       this.$store.commit("isCollapse", !this.$store.state.isCollapse);
+    },
+    outLogin(path) {
+      this.$router.replace({
+        path
+      });
     }
   }
 };

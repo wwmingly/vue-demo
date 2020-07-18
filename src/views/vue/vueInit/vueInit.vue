@@ -134,6 +134,18 @@ export default {
               ]
             },
             {
+              label: "登录",
+              id: "1_4",
+              level: 2,
+              children: [
+                {
+                  label: "用户信息存储",
+                  id: "1_4_1",
+                  level: 3
+                }
+              ]
+            },
+            {
               label: "插件",
               id: "1_4",
               level: 2,

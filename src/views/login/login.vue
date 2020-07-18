@@ -46,17 +46,48 @@ export default {
         name: [{ required: true, message: "请输入用户名", trigger: "blur" }],
         pass: [{ required: true, message: "请输入密码", trigger: "blur" }]
       },
-      ruleForm: { name: "", pass: "", checked: true }
+      ruleForm: { name: "", pass: "", checked: true },
+      // 默认创建两个用户账号
+      userList: [
+        {
+          name: "admin",
+          pass: "vvmily",
+          typeCode: "ADMIN",
+          typeName: "管理员",
+          userId: "001"
+        },
+        {
+          name: "reader",
+          pass: "vvmily",
+          typeCode: "READER",
+          typeName: "普通读者",
+          userId: "002"
+        }
+      ]
     };
   },
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          console.log(this.ruleForm);
-          this.login();
+          let isBool = 0;
+          this.userList.forEach(item => {
+            if (
+              this.ruleForm.name === item.name &&
+              this.ruleForm.pass === item.pass
+            ) {
+              isBool -= 1;
+              this.login();
+            } else {
+              isBool += 1;
+            }
+          });
+          this.$message({
+            type: isBool === 2 ? "error" : "success",
+            message:
+              isBool === 2 ? "用户名或者密码错误，请重新输入" : "欢迎登录！"
+          });
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
