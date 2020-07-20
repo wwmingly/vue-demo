@@ -3,7 +3,7 @@
     <div class="small-left max_height no_scroll_box">
       <slot name="left"></slot>
     </div>
-    <div class="small-right max_height no_scroll_box">
+    <div class="small-right max_height no_scroll_box small_layout_scroll-box">
       <slot name="right"></slot>
     </div>
   </div>

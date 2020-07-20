@@ -10,24 +10,101 @@
         ></com-tree>
       </template>
       <template slot="right">
-        <my-test class="common-markdown">
+        <vue-init class="common-markdown">
           <template slot="title_1">
-            <div class="common_slot-title">我这里是插槽，就是显示出来了，哈哈哈</div>
+            <div class="common_slot-title position_1_1_1">1、初始化项目</div>
           </template>
-        </my-test>
+          <template slot="title_2">
+            <div class="common_slot-title position_1_1_2">2、配置scss/less-loader</div>
+          </template>
+          <template slot="images_2">
+            <div class="common_slot-images">
+              <el-image :src="require('@/assets/images/vueInit/002.jpg')" fit="fill"></el-image>
+            </div>
+          </template>
+          <template slot="title_3">
+            <div class="common_slot-title position_1_1_3">3、引入element-ui</div>
+          </template>
+          <template slot="title_4">
+            <div class="common_slot-title position_1_1_4">4、字体</div>
+          </template>
+          <template slot="title_5">
+            <div class="common_slot-title position_1_1_5">5、搭建布局</div>
+          </template>
+          <template slot="images_5">
+            <div class="common_slot-images">
+              <el-image :src="require('@/assets/images/vueInit/005.jpg')" fit="fill"></el-image>
+            </div>
+          </template>
+          <template slot="markdown_5">
+            <el-collapse v-model="activeMarks">
+              <el-collapse-item title="Index.vue文件" name="1">
+                <layout-md></layout-md>
+              </el-collapse-item>
+              <el-collapse-item title="Container.vue文件" name="2">
+                <container-md></container-md>
+              </el-collapse-item>
+              <el-collapse-item title="MenuLeft.vue文件" name="3">
+                <menu-left-md></menu-left-md>
+              </el-collapse-item>
+              <el-collapse-item title="MenuNav.vue文件" name="4">
+                <menu-nav-md></menu-nav-md>
+              </el-collapse-item>
+            </el-collapse>
+          </template>
+          <template slot="title_6">
+            <div class="common_slot-title position_1_1_6">6、样式抽取</div>
+          </template>
+          <template slot="markdown_6">
+            <el-collapse v-model="activeStyle">
+              <el-collapse-item title="reset.scss文件" name="1">
+                <reset-style></reset-style>
+              </el-collapse-item>
+              <el-collapse-item title="variable.scss文件" name="2">
+                <variable-style></variable-style>
+              </el-collapse-item>
+              <el-collapse-item title="index.scss文件" name="3">
+                <index-style></index-style>
+              </el-collapse-item>
+            </el-collapse>
+          </template>
+          <template slot="title_7">
+            <div class="common_slot-title position_1_1_7">7、路由配置</div>
+          </template>
+          <template slot="markdown_7">
+            <el-collapse v-model="activeRouter">
+              <el-collapse-item title="index.js文件" name="1">
+                <index-router></index-router>
+              </el-collapse-item>
+              <el-collapse-item title="vueRouter.js文件" name="2">
+                <vue-router-router></vue-router-router>
+              </el-collapse-item>
+            </el-collapse>
+          </template>
+        </vue-init>
       </template>
     </small-layout>
   </div>
 </template>
 <script>
 import smallLayout from "@/components/smallLayout/Index";
+import { Fragment } from "vue-fragment";
 import comTree from "@/components/tree/Index";
 export default {
   name: "VueInit",
   components: {
     smallLayout,
     comTree,
-    myTest: () => import("./markdown/test.md")
+    vueInit: () => import("./markdown/vueInit.md"),
+    layoutMd: () => import("./markdown/layout/Index.md"),
+    containerMd: () => import("./markdown/layout/Container.md"),
+    menuLeftMd: () => import("./markdown/layout/components/MenuLeft.md"),
+    menuNavMd: () => import("./markdown/layout/components/MenuNav.md"),
+    variableStyle: () => import("./markdown/styles/variable.md"),
+    resetStyle: () => import("./markdown/styles/reset.md"),
+    indexStyle: () => import("./markdown/styles/index.md"),
+    indexRouter: () => import("./markdown/router/index.md"),
+    vueRouterRouter: () => import("./markdown/router/vueRouter.md")
   },
   data() {
     return {
@@ -147,12 +224,12 @@ export default {
             },
             {
               label: "插件",
-              id: "1_4",
+              id: "1_5",
               level: 2,
               children: [
                 {
                   label: "echarts",
-                  id: "1_4_1",
+                  id: "1_5_1",
                   level: 3
                 }
               ]
@@ -219,26 +296,68 @@ export default {
       defaultProps: {
         children: "children",
         label: "label"
-      }
+      },
+      activeMarks: [],
+      activeStyle: [],
+      activeRouter: []
     };
   },
-  created() {},
+  created() {
+    // console.log(menuNavMd)
+  },
   methods: {
     handleNodeClick(data) {
       console.log(data);
+      this.moveContents(data);
+    },
+    // 移动
+    moveContents(data) {
+      let el = document.getElementsByClassName(`position_${data.id}`)[0];
+      if (!el) return;
+      let parent = document.getElementsByClassName(
+        `small_layout_scroll-box`
+      )[0];
+      this.$nextTick(function() {
+        parent.scrollTo({
+          behavior: "smooth",
+          top:
+            el.offsetTop - parent.offsetTop === 20
+              ? 0
+              : el.offsetTop - parent.offsetTop
+        });
+      });
     }
   }
 };
 </script>
 <style lang="scss">
 .vue_vue_init_vue_init-container {
-  .common_slot-title {
-    background: #fff;
-    width: 100%;
-    padding: 20px 19px;
-    position: relative;
-    left: -20px;
-    border-left: 2px solid #5f9ea0;
+  .common-markdown {
+    line-height: 30px;
+    pre {
+      padding: 10px 0;
+    }
+    .common_slot-title {
+      background: #fff;
+      width: 100%;
+      padding: 20px 19px;
+      position: relative;
+      left: -20px;
+      border-left: 2px solid #5f9ea0;
+      color: #5f9ea0;
+      font-weight: bold;
+    }
+    .common_slot-images {
+      .el-image {
+        max-width: 1000px;
+      }
+    }
+  }
+  .el-collapse-item__header {
+    background-color: #f5f5f5;
+  }
+  .el-collapse-item__content {
+    padding: 10px;
   }
 }
 </style>

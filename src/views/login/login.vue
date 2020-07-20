@@ -37,6 +37,7 @@
 </template>
 <script>
 import draggableDialog from "@/components/draggableDialog/Index";
+import { getToken, getUserInfo } from "@/api/login/index";
 export default {
   name: "Login",
   components: { draggableDialog },
@@ -46,47 +47,15 @@ export default {
         name: [{ required: true, message: "请输入用户名", trigger: "blur" }],
         pass: [{ required: true, message: "请输入密码", trigger: "blur" }]
       },
-      ruleForm: { name: "", pass: "", checked: true },
+      ruleForm: { name: "", pass: "", checked: true }
       // 默认创建两个用户账号
-      userList: [
-        {
-          name: "admin",
-          pass: "vvmily",
-          typeCode: "ADMIN",
-          typeName: "管理员",
-          userId: "001"
-        },
-        {
-          name: "reader",
-          pass: "vvmily",
-          typeCode: "READER",
-          typeName: "普通读者",
-          userId: "002"
-        }
-      ]
     };
   },
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          let isBool = 0;
-          this.userList.forEach(item => {
-            if (
-              this.ruleForm.name === item.name &&
-              this.ruleForm.pass === item.pass
-            ) {
-              isBool -= 1;
-              this.login();
-            } else {
-              isBool += 1;
-            }
-          });
-          this.$message({
-            type: isBool === 2 ? "error" : "success",
-            message:
-              isBool === 2 ? "用户名或者密码错误，请重新输入" : "欢迎登录！"
-          });
+          this.login();
         } else {
           return false;
         }
@@ -96,12 +65,35 @@ export default {
       this.$refs[formName].resetFields();
     },
     login() {
-      this.$router.push({
-        path: "/index",
-        query: {
-          status: "1"
+      // 1、获取token
+      //    1.1、通过本地获取token，
+      let res = getToken(this.ruleForm.name, this.ruleForm.pass);
+      let { code, message, result } = res;
+      //    1.2、验证用户账号密码，请求token，通过则进入2，否则重新输入账号密码
+      if (code === 200) {
+        localStorage.setItem("vvmily-user-token", result.token);
+        // 2、通过token请求用户信息
+        let user = getUserInfo(result.token, this.ruleForm);
+        let { code: _code, message: _message, result: _result } = user;
+        //    2.1 正常通过token请求用户信息
+        //    2.2 token过期---进入1，重新验证账号获取token
+        if (_code === 200) {
+          // 3、获取用户信息
+          //    3.1 正常获取用户信息，进入首页
+          //    3.2 请求失败，返回说明，并重新发送请求
+          localStorage.setItem("vvmily-user-info", JSON.stringify(_result));
+          this.$router.push({
+            path: "/index",
+            query: {
+              status: "1"
+            }
+          });
+        } else {
+          this.message.warning(_message);
         }
-      });
+      } else {
+        this.message.warning(message);
+      }
     }
   }
 };

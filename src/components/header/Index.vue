@@ -13,7 +13,7 @@
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>我的</el-dropdown-item>
           <!-- <el-dropdown-item>登陆</el-dropdown-item> -->
-          <el-dropdown-item :command="'/login'">退出</el-dropdown-item>
+          <el-dropdown-item :command="'out'">退出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
       <span>vvmily</span>
@@ -21,6 +21,7 @@
   </div>
 </template>
 <script>
+import { logout } from "@/api/login/index";
 export default {
   name: "Header",
   computed: {
@@ -32,10 +33,24 @@ export default {
     control() {
       this.$store.commit("isCollapse", !this.$store.state.isCollapse);
     },
-    outLogin(path) {
-      this.$router.replace({
-        path
-      });
+    outLogin(str) {
+      switch (str) {
+        case "out":
+          let res = logout();
+          let { code, message } = res;
+          if (code === 200) {
+            localStorage.removeItem("vvmily-user-token");
+            localStorage.removeItem("vvmily-user-info");
+            this.$router.replace({
+              path: "/login"
+            });
+          } else {
+            this.message.warning(message);
+          }
+          break;
+        default:
+          break;
+      }
     }
   }
 };
