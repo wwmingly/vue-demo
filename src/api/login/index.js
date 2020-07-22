@@ -25,13 +25,13 @@ const userList = [{
 }]
 // token验证
 export function getToken(name, pass) {
-  let item = userList.find(item => item.name === name && item.pass === pass)
+  let item = userList.find(item => item.name === name && item.pass === pass) || {}
   return {
-    code: 200,
-    message: "验证成功",
-    result: {
+    code: item.token ? 200 : 500,
+    message: item.token ? "验证成功" : '账号或者密码不正确',
+    result: item.token ? {
       token: item.token
-    }
+    } : {}
   }
 }
 // 请求用户信息

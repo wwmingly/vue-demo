@@ -17,17 +17,22 @@
             class="demo-ruleForm _pr20 _pt10"
           >
             <el-form-item label="用户名" prop="name">
-              <el-input v-model="ruleForm.name"></el-input>
+              <el-input v-model="ruleForm.name" @keyup.enter.native="keyup"></el-input>
             </el-form-item>
             <el-form-item class="_mb0" label="密码" prop="pass">
-              <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+              <el-input
+                type="password"
+                @keyup.enter.native="keyup"
+                v-model="ruleForm.pass"
+                autocomplete="off"
+              ></el-input>
             </el-form-item>
             <el-form-item class="_mb0">
               <el-checkbox v-model="ruleForm.checked">记住密码</el-checkbox>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
-              <el-button @click="resetForm('ruleForm')">重置</el-button>
+              <!-- <el-button @click="resetForm('ruleForm')">重置</el-button> -->
             </el-form-item>
           </el-form>
         </div>
@@ -51,6 +56,9 @@ export default {
       // 默认创建两个用户账号
     };
   },
+  created() {
+    this.getCookie();
+  },
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
@@ -64,6 +72,9 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
+    keyup(e) {
+      this.login();
+    },
     login() {
       // 1、获取token
       //    1.1、通过本地获取token，
@@ -71,6 +82,11 @@ export default {
       let { code, message, result } = res;
       //    1.2、验证用户账号密码，请求token，通过则进入2，否则重新输入账号密码
       if (code === 200) {
+        if (this.ruleForm.checked) {
+          this.setCookie(this.ruleForm.name, this.ruleForm.pass, 7);
+        } else {
+          this.clearCookie();
+        }
         localStorage.setItem("vvmily-user-token", result.token);
         // 2、通过token请求用户信息
         let user = getUserInfo(result.token, this.ruleForm);
@@ -89,11 +105,42 @@ export default {
             }
           });
         } else {
-          this.message.warning(_message);
+          this.$message.warning(_message);
         }
       } else {
-        this.message.warning(message);
+        this.$message.warning(message);
       }
+    },
+    //设置cookie
+    setCookie(name, pass, time) {
+      var date = new Date(); //获取时间
+      date.setTime(date.getTime() + 24 * 60 * 60 * 1000 * time); //保存的天数
+      //字符串拼接cookie，密码应该加密的，哈哈哈
+      window.document.cookie =
+        "name" + "=" + name + ";path=/;expires=" + date.toGMTString(); // path那些路径下的文件有权限读取，expires过期时间
+      window.document.cookie =
+        "pass" + "=" + pass + ";path=/;expires=" + date.toGMTString();
+    },
+    //读取cookie
+    getCookie: function() {
+      if (document.cookie.length > 0) {
+        var arr = document.cookie.split("; ");
+        for (var i = 0; i < arr.length; i++) {
+          var arr2 = arr[i].split("=");
+          if (arr2[0] == "name") {
+            this.ruleForm.name = arr2[1];
+          } else if (arr2[0] == "pass") {
+            this.ruleForm.pass = arr2[1];
+          }
+        }
+        this.ruleForm.checked = true;
+      } else {
+        this.ruleForm.checked = false;
+      }
+    },
+    //清除cookie
+    clearCookie() {
+      this.setCookie("", "", -1);
     }
   }
 };

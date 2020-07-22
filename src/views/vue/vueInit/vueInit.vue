@@ -10,12 +10,12 @@
         ></com-tree>
       </template>
       <template slot="right">
-        <vue-init class="common-markdown">
+        <vue-init class="common-markdown max_height no_scroll_box" ref="scrollBox">
           <template slot="title_1">
-            <div class="common_slot-title position_1_1_1">1、初始化项目</div>
+            <div class="common_slot-title" ref="position_1_1_1">1、初始化项目</div>
           </template>
           <template slot="title_2">
-            <div class="common_slot-title position_1_1_2">2、配置scss/less-loader</div>
+            <div class="common_slot-title" ref="position_1_1_2">2、配置scss/less-loader</div>
           </template>
           <template slot="images_2">
             <div class="common_slot-images">
@@ -23,13 +23,13 @@
             </div>
           </template>
           <template slot="title_3">
-            <div class="common_slot-title position_1_1_3">3、引入element-ui</div>
+            <div class="common_slot-title" ref="position_1_1_3">3、引入element-ui</div>
           </template>
           <template slot="title_4">
-            <div class="common_slot-title position_1_1_4">4、字体</div>
+            <div class="common_slot-title" ref="position_1_1_4">4、字体</div>
           </template>
           <template slot="title_5">
-            <div class="common_slot-title position_1_1_5">5、搭建布局</div>
+            <div class="common_slot-title" ref="position_1_1_5">5、搭建布局</div>
           </template>
           <template slot="images_5">
             <div class="common_slot-images">
@@ -53,7 +53,7 @@
             </el-collapse>
           </template>
           <template slot="title_6">
-            <div class="common_slot-title position_1_1_6">6、样式抽取</div>
+            <div class="common_slot-title" ref="position_1_1_6">6、样式抽取</div>
           </template>
           <template slot="markdown_6">
             <el-collapse v-model="activeStyle">
@@ -69,7 +69,7 @@
             </el-collapse>
           </template>
           <template slot="title_7">
-            <div class="common_slot-title position_1_1_7">7、路由配置</div>
+            <div class="common_slot-title" ref="position_1_1_7">7、路由配置</div>
           </template>
           <template slot="markdown_7">
             <el-collapse v-model="activeRouter">
@@ -81,6 +81,67 @@
               </el-collapse-item>
             </el-collapse>
           </template>
+          <template slot="title_8">
+            <div class="common_slot-title" ref="position_1_1_8">8、vuex状态管理</div>
+          </template>
+          <template slot="images_8">
+            <div class="common_slot-images">
+              <el-image :src="require('@/assets/images/vueInit/008.jpg')" fit="fill"></el-image>
+            </div>
+          </template>
+          <template slot="markdown_8">
+            <el-collapse v-model="activeVuex">
+              <el-collapse-item title="index.js文件" name="1">
+                <index-vuex></index-vuex>
+              </el-collapse-item>
+              <el-collapse-item title="state.js文件" name="2">
+                <state-vuex></state-vuex>
+              </el-collapse-item>
+              <el-collapse-item title="mutations.js文件" name="3">
+                <mutations-vuex></mutations-vuex>
+              </el-collapse-item>
+              <el-collapse-item title="actions.js文件" name="4">
+                <actions-vuex></actions-vuex>
+              </el-collapse-item>
+              <el-collapse-item title="getters.js文件" name="5">
+                <getters-vuex></getters-vuex>
+              </el-collapse-item>
+            </el-collapse>
+          </template>
+          <template slot="title_9">
+            <div class="common_slot-title" ref="position_1_1_9">9、axios</div>
+          </template>
+          <template slot="markdown_9">
+            <el-collapse v-model="activeAxios">
+              <el-collapse-item title="index.js文件" name="1">
+                <request-axios></request-axios>
+              </el-collapse-item>
+            </el-collapse>
+          </template>
+          <template slot="title_10">
+            <div class="common_slot-title" ref="position_1_1_10">10、优化</div>
+          </template>
+          <template slot="title_11">
+            <div class="common_slot-title" ref="position_1_1_11">11、效果图</div>
+          </template>
+          <template slot="title_21">
+            <div class="common_slot-title" ref="position_1_2_1">12、webpack配置</div>
+          </template>
+          <template slot="title_22">
+            <div class="common_slot-title" ref="position_1_2_2">13、环境变量配置</div>
+          </template>
+          <template slot="title_31">
+            <div class="common_slot-title" ref="position_1_3_1">14、vscode配置与插件推荐</div>
+          </template>
+          <template slot="title_32">
+            <div class="common_slot-title" ref="position_1_3_2">15、.eslintrc.js文件</div>
+          </template>
+          <template slot="title_41">
+            <div class="common_slot-title" ref="position_1_4_1">16、用户信息存储</div>
+          </template>
+          <template slot="title_51">
+            <div class="common_slot-title" ref="position_1_5_1">16、Echarts</div>
+          </template>
         </vue-init>
       </template>
     </small-layout>
@@ -90,12 +151,14 @@
 import smallLayout from "@/components/smallLayout/Index";
 import { Fragment } from "vue-fragment";
 import comTree from "@/components/tree/Index";
+import vueInit from "./markdown/vueInit.md";
 export default {
   name: "VueInit",
   components: {
     smallLayout,
     comTree,
-    vueInit: () => import("./markdown/vueInit.md"),
+    vueInit,
+    // vueInit: () => import("./markdown/vueInit.md"),
     layoutMd: () => import("./markdown/layout/Index.md"),
     containerMd: () => import("./markdown/layout/Container.md"),
     menuLeftMd: () => import("./markdown/layout/components/MenuLeft.md"),
@@ -104,7 +167,13 @@ export default {
     resetStyle: () => import("./markdown/styles/reset.md"),
     indexStyle: () => import("./markdown/styles/index.md"),
     indexRouter: () => import("./markdown/router/index.md"),
-    vueRouterRouter: () => import("./markdown/router/vueRouter.md")
+    vueRouterRouter: () => import("./markdown/router/vueRouter.md"),
+    indexVuex: () => import("./markdown/vuex/index.md"),
+    stateVuex: () => import("./markdown/vuex/state.md"),
+    mutationsVuex: () => import("./markdown/vuex/mutations.md"),
+    actionsVuex: () => import("./markdown/vuex/actions.md"),
+    gettersVuex: () => import("./markdown/vuex/getters.md"),
+    requestAxios: () => import("./markdown/utils/request/index.md")
   },
   data() {
     return {
@@ -235,62 +304,6 @@ export default {
               ]
             }
           ]
-        },
-        {
-          // 当修改的文件，再此添加即可
-          label: "工程文件",
-          id: "2",
-          level: 1,
-          children: [
-            {
-              label: "build",
-              id: "2_1",
-              level: 2,
-              children: [
-                { label: "webpack.base.conf.js", id: "2_1_1", level: 3 }
-              ]
-            },
-            {
-              label: "config",
-              id: "2_2",
-              level: 2
-            },
-            {
-              label: "src",
-              id: "2_3",
-              level: 2
-            },
-            {
-              label: "static",
-              id: "2_4",
-              level: 2
-            },
-            {
-              label: ".babelrc",
-              id: "2_5",
-              level: 2
-            },
-            {
-              label: ".editorconfig",
-              id: "2_6",
-              level: 2
-            },
-            {
-              label: ".eslintrc.js",
-              id: "2_7",
-              level: 2
-            },
-            {
-              label: ".postcssrc.js",
-              id: "2_8",
-              level: 2
-            },
-            {
-              label: "package.json",
-              id: "2_9",
-              level: 2
-            }
-          ]
         }
       ],
       defaultProps: {
@@ -299,31 +312,39 @@ export default {
       },
       activeMarks: [],
       activeStyle: [],
-      activeRouter: []
+      activeRouter: [],
+      activeVuex: [],
+      activeAxios: []
     };
   },
   created() {
     // console.log(menuNavMd)
   },
+  mounted() {
+    this.$nextTick(() => {
+      this.$root.$el.addEventListener("scroll", e => {});
+    });
+  },
   methods: {
     handleNodeClick(data) {
-      console.log(data);
       this.moveContents(data);
     },
     // 移动
     moveContents(data) {
-      let el = document.getElementsByClassName(`position_${data.id}`)[0];
-      if (!el) return;
-      let parent = document.getElementsByClassName(
-        `small_layout_scroll-box`
-      )[0];
       this.$nextTick(function() {
+        // let el = document.getElementsByClassName(`position_${data.id}`)[0];
+        let ref = this.$refs[`position_${data.id}`];
+        if (!ref) return;
+        let parent = this.$refs.scrollBox.$el;
+        // document.getElementsByClassName(
+        //   `small_layout_scroll-box`
+        // )[0];
         parent.scrollTo({
           behavior: "smooth",
           top:
-            el.offsetTop - parent.offsetTop === 20
+            ref.offsetTop - parent.offsetTop === 20
               ? 0
-              : el.offsetTop - parent.offsetTop
+              : ref.offsetTop - parent.offsetTop
         });
       });
     }
@@ -334,6 +355,10 @@ export default {
 .vue_vue_init_vue_init-container {
   .common-markdown {
     line-height: 30px;
+    .max_height {
+      height: calc(100vh - 101px);
+      overflow: auto;
+    }
     pre {
       padding: 10px 0;
     }
