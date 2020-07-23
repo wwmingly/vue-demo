@@ -18,7 +18,16 @@ export let lineOption = {
     }
   },
   legend: {
-    data: ["访问量", "增长量", "在线人数"],
+    data: [{
+      name: "访问量",
+      icon: "circle"
+    }, {
+      name: "增长量",
+      icon: "circle"
+    }, {
+      name: "在线人数",
+      icon: "circle"
+    }],
     left: "5%",
     top: '3%'
   },
@@ -150,7 +159,16 @@ export let barOpiton = {
   backgroundColor: "#fff",
   color: ["#5f9ea0", "#efcf73", "#8ec9eb"],
   legend: {
-    data: ["访问量", "增长量", "在线人数"],
+    data: [{
+      name: "访问量",
+      icon: "diamond"
+    }, {
+      name: "增长量",
+      icon: "diamond"
+    }, {
+      name: "在线人数",
+      icon: "diamond"
+    }],
     left: "5%",
     top: '3%'
   },

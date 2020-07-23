@@ -36,15 +36,21 @@
           @tab-click="clickTab"
         >
           <el-tab-pane
-            class="max_height no_scroll_box"
             v-for="(item) in routerTabs"
             :key="item.path"
             :label="item.meta.title"
             :name="item.path"
           >
-            <router-view />
+            <!-- <router-view /> -->
           </el-tab-pane>
         </el-tabs>
+        <div class="max_height no_scroll_box">
+          <keep-alive>
+            <transition name="contain-fade">
+              <router-view />
+            </transition>
+          </keep-alive>
+        </div>
       </el-main>
     </el-container>
   </el-container>
@@ -172,6 +178,19 @@ export default {
   .el-tabs__item:hover,
   .el-tabs__item.is-active {
     color: #5f9ea0;
+  }
+  /* 可以设置不同的进入和离开动画 */
+  /* 设置持续时间和动画函数 */
+  .contain-fade-enter-active {
+    transition: all 0.2s ease;
+  }
+  .contain-fade-leave-active {
+    transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+  }
+  .contain-fade-enter,
+  .contain-fade-leave-to {
+    transform: translateX(10px);
+    opacity: 0.2;
   }
 }
 </style>

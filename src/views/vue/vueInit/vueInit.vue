@@ -14,6 +14,11 @@
           <template slot="title_1">
             <div class="common_slot-title" ref="position_1_1_1">1、初始化项目</div>
           </template>
+          <template slot="images_1">
+            <div class="common_slot-images">
+              <el-image :src="require('@/assets/images/vueInit/001.jpg')" fit="fill"></el-image>
+            </div>
+          </template>
           <template slot="title_2">
             <div class="common_slot-title" ref="position_1_1_2">2、配置scss/less-loader</div>
           </template>
@@ -151,14 +156,12 @@
 import smallLayout from "@/components/smallLayout/Index";
 import { Fragment } from "vue-fragment";
 import comTree from "@/components/tree/Index";
-import vueInit from "./markdown/vueInit.md";
 export default {
   name: "VueInit",
   components: {
     smallLayout,
     comTree,
-    vueInit,
-    // vueInit: () => import("./markdown/vueInit.md"),
+    vueInit: () => import("./markdown/vueInit.md"),
     layoutMd: () => import("./markdown/layout/Index.md"),
     containerMd: () => import("./markdown/layout/Container.md"),
     menuLeftMd: () => import("./markdown/layout/components/MenuLeft.md"),
@@ -358,24 +361,6 @@ export default {
     .max_height {
       height: calc(100vh - 101px);
       overflow: auto;
-    }
-    pre {
-      padding: 10px 0;
-    }
-    .common_slot-title {
-      background: #fff;
-      width: 100%;
-      padding: 20px 19px;
-      position: relative;
-      left: -20px;
-      border-left: 2px solid #5f9ea0;
-      color: #5f9ea0;
-      font-weight: bold;
-    }
-    .common_slot-images {
-      .el-image {
-        max-width: 1000px;
-      }
     }
   }
   .el-collapse-item__header {

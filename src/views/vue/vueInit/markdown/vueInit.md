@@ -1,5 +1,10 @@
 <slot name="title_1"></slot>
 
+    在构建项目之前，首先确定node和npm/cnpm已经安装
+      如果没有安装，node下载地址：http://nodejs.cn/download/
+      安装cnpm：npm install -g cnpm --registry=https://registry.npm.taobao.org
+<slot name="images_1"></slot>
+    好了，我们开始：
       vue init webpack project-name
       project-name：自定义项目名称，且不能有大些字母
 
@@ -71,17 +76,49 @@
     安装路由模块，如果构建工程时已经安装，则跳过
     npm install vue-router --save
     说明：
-      1、所有路由都基于new Router({
-        mode:'hash',                // 两种模式hash/history，默认hash
-        routes:[                    // 不要写错，是routes
-          {
-            path:'',                // 跳转路由名称
-            name:'',                // 模块名称
-            children:[]
-          }
-        ]
-      })
-      后续补充。。。
+      1、新建router/index.js文件
+        import Vue from "vue"
+        import Router from 'vue-router'
+        Vue.use(Router)
+        export default new Router({
+          mode:'hash',                                            // 两种模式hash/history，默认hash
+          routes:[                                                // 不要写错，是routes
+            {
+              path:'/login',                                      // 跳转路由名称，
+              name:'Login',                                       // 模块名称
+              redirect: '/',                                      // 重定向，可redirect: { name: 'foo' }
+              alias: 'log',                                       // 别名
+              component: () => import('@/views/login/login'),
+              children:[]                                         // 嵌套路由
+            }
+          ]
+        })
+        path说明：
+         a.带参 path:'/login/:id', 参数值会被设置到 this.$route.params
+         b.path:'*' ,匹配所有路由; path: '/user-*' // 会匹配以 `/user-` 开头的任意路径
+      2、main.js文件
+        import router from './router'
+        new Vue({
+          ...
+          router,                                                 // 注入
+          ...
+        })
+      3、.vue文件中
+        <router-view />                                           // 可以指定name="a"，默认default
+        <keep-alive> </keep-alive>                                // 可加缓存
+      4、函数式/声明式
+        函数式：
+          router.push('home')                                               // 字符串
+          router.push({ path: 'home' })                                     // 对象
+          router.push({ name: 'user', params: { userId: '123' }})           // 命名的路由
+          router.push({ path: 'register', query: { plan: 'private' }})      // 带查询参数，变成 /register?plan=private
+
+          router.go(n)                                                      // n 是整数
+        声明式：
+        <router-link to="/foo">Go to Foo</router-link>
+        <router-link to="{ name: 'user', params: { userId: '123' }">Go to Foo</router-link>
+        <router-link to="/foo" replace>Go to Foo</router-link>
+        参考：https://router.vuejs.org/zh/
 <slot name="markdown_7"></slot>
 <slot name="title_8"></slot>
     安装：cnpm install vuex -S
@@ -200,10 +237,59 @@
 <slot name="title_22"></slot>
     ...
 <slot name="title_31"></slot>
-    ...
+    1、Vetur                     // Vue多功能集成插件，包括：语法高亮，智能提示...
+    2、Auto Close Tag            // 标签自动闭合
+    3、Auto Rename  Tag          // 标签同步更改
+    4、Beautify                  // 代码格式化
+    5、Gitlens                   // git日志
+    6、HTML CSS Support          // 智能提示class
+    7、JavaScript(ES6) code snippets  // ES6语法智能提示，以及快速输入，不仅仅支持.js，还支持.ts，.jsx，.tsx，.html，.vue
+    8、Path Intellisense         // 自动提示文件路径，支持各种快速引入文件
+    9、Prettier                  // Prettier 是目前 Web 开发中最受欢迎的代码格式化程序
+    参考：https://www.cnblogs.com/zzhqdkf/p/12452498.html
 <slot name="title_32"></slot>
     ...
+    参考：https://www.fengerzh.com/vscode-vue/
 <slot name="title_41"></slot>
-    ...
+    1、sessionStorage
+      用于本地存储的一个会话中数据，会话结束随之销毁（关闭浏览器页面就没了）
+      sessionStorage.setItem(name,data);sessionStorage.getItem(name);sessionStorage.removeItem(name)
+    2、localStorage
+      存储于同一个域名下；大小5M；生命周期是永久保存，只能主动删除；存在兼容问题；
+      localStorage.setItem(name,data);localStorage.getItem(name);localStorage.removeItem(name)
+    3、cookie
+      大小4k；生命周期可自定义；每次都随请求数据发送到服务端；所有浏览器都支持
+      window.document.cookie 
+        如：window.document.cookie = "name" + "=" + name + ";path=/;expires=" + date.toGMTString(); // path那些路径下的文件有权限读取，expires过期时间
+        let cookie = document.cookie;                                                               // console.log(cookie)
+    4、vuex
+      vuex本身不用于存储信息，而是用于记录状态，如登录状态，token是否过期
+      所以在vue项目中，所有用户等信息应该从session或者localStorage中读取而进行记录
+        如：在登录，退出登录时更改状态
+      
 <slot name="title_51"></slot>
   安装：npm install echarts -S
+  
+    1、在main.js中,全局引入：
+          import echarts from 'echarts'
+          Vue.prototype.$echarts = echarts
+    2、按需引入：
+          // 引入 ECharts 主模块，不采用import，是因为import要绝对路径
+          var echarts = require('echarts/lib/echarts');
+          // 引入柱状图
+          require('echarts/lib/chart/bar');
+          require('echarts/lib/component/tooltip');
+          require('echarts/lib/component/title');
+          ...
+          参考地址：https://echarts.apache.org/zh/tutorial.html#%E5%9C%A8%20webpack%20%E4%B8%AD%E4%BD%BF%E7%94%A8%20ECharts
+        在.vue页面中使用：
+          let myChart = this.$echarts.init(document.getElementById('main'));  // (this.$echarts等价于第2点的echarts)
+          myChart.setOption({
+            ... // 配置项
+          });
+          window.addEventListener("resize", () => {
+            myChart.resize();                                                  //页面大小变化后myChart也更改大小
+          });
+          this.$once("hook:beforeDestroy", () => {                             // 试试这种监听生命周期函数的写法！！！
+            window.removeEventListener("resize", myChart.resize);
+          });

@@ -57,14 +57,20 @@ export default {
       return barOpiton;
     },
     pieOption() {
-      let len = 10;
-
+      let len = 12;
       let arr = this.createRandom(0, 100, len);
-      let legend = (barOpiton.xAxis.data = this.createHour(len));
+      let legend = this.createHour(len);
+
+      legend = legend.map(item => {
+        return {
+          name: item,
+          icon: "circle"
+        };
+      });
       pieOption.legend.data = legend;
       let _arr = [];
       arr.forEach((item, index) => {
-        _arr.push({ value: item, name: legend[index] });
+        _arr.push({ value: item, name: legend[index].name });
       });
       pieOption.series[0].data = _arr;
       return pieOption;

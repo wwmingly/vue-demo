@@ -1,12 +1,13 @@
 // https://eslint.org/docs/user-guide/configuring
 
 module.exports = {
-  root: true,
+  root: true, // 本文件为根文件，禁止往上级查找
   parserOptions: {
-    parser: 'babel-eslint'
+    parser: 'babel-eslint', // 指定eslint解析器
+    // sourceType:'script' // sourceType用来指定js导入的方式
   },
   env: {
-    browser: true,
+    browser: true, //此项指定环境的全局变量，下面的配置指定为浏览器环境
   },
   extends: [
     // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention

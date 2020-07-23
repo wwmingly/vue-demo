@@ -23,6 +23,7 @@ export default {
   }
   .small-right {
     flex: 1;
+    background: #f5f5f5;
     border-left: 1px solid #e4e7ed;
   }
   .max_height {

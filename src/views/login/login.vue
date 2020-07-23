@@ -100,9 +100,7 @@ export default {
           localStorage.setItem("vvmily-user-info", JSON.stringify(_result));
           this.$router.push({
             path: "/index",
-            query: {
-              status: "1"
-            }
+            query: {}
           });
         } else {
           this.$message.warning(_message);
