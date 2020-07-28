@@ -4,7 +4,9 @@
       <template slot="left">
         <com-tree
           :data="treeData"
-          :current-node-key="'1_1_1'"
+          :current-node-key="defaultActive"
+          :default-expanded-keys="[defaultActive]"
+          :default-expand-all="false"
           :node-key="'id'"
           @node-click="handleNodeClick"
         ></com-tree>
@@ -309,6 +311,7 @@ export default {
           ]
         }
       ],
+      defaultActive: "1_1_1",
       defaultProps: {
         children: "children",
         label: "label"
@@ -324,12 +327,14 @@ export default {
     // console.log(menuNavMd)
   },
   mounted() {
-    this.$nextTick(() => {
-      this.$root.$el.addEventListener("scroll", e => {});
-    });
+    // this.$nextTick(() => {
+    //   this.$root.$el.addEventListener("scroll", e => {});
+    // });
+    console.log(123123123)
   },
   methods: {
     handleNodeClick(data) {
+      this.defaultActive = data.id;
       this.moveContents(data);
     },
     // 移动

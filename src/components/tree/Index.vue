@@ -1,6 +1,6 @@
 <template>
   <div class="tree_index_container">
-    <el-input placeholder="请输入" v-model="filterText"></el-input>
+    <el-input v-if="filter" placeholder="请输入" v-model="filterText"></el-input>
     <el-tree
       class="_el-tree no_scroll_box"
       ref="tree"
@@ -45,6 +45,11 @@ export default {
     nodeKey: {
       type: String,
       default: "id"
+    },
+    filter: {
+      // 是否过滤,默认 是
+      type: Boolean,
+      default: true
     }
   },
   watch: {

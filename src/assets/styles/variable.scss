@@ -9,6 +9,10 @@ $menuBackgroundColor: #5a5a5a; // 背景颜色
 $menuTextColor: #fff; // 文字颜色
 $menuActiveTextColor: #ffd04b; // 文字选中颜色
 
+// media max-width
+$mediaWidthHide:1000px;
+
+
 :export {
   menuBackgroundColor: $menuBackgroundColor;
   menuTextColor: $menuTextColor;

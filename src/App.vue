@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <keep-alive>
+    <keep-alive :include="include">
       <router-view />
     </keep-alive>
   </div>
@@ -8,10 +8,21 @@
 
 <script>
 export default {
-  name: "App"
+  name: "App",
+  data() {
+    return {
+      include: []
+    };
+  },
+  watch: {
+    $route(to, from) {
+      if (to.meta.keep) {
+        !this.include.includes(to.name) && this.include.push(to.name);
+      }
+    }
+  }
 };
 </script>
 
 <style lang="scss">
-
 </style>

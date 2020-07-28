@@ -44,12 +44,26 @@
             <!-- <router-view /> -->
           </el-tab-pane>
         </el-tabs>
+        <!-- 当页面小于$mediaWidthHide宽度，处理方式 -->
+        <com-tree
+          class="router-left-tree"
+          :data="routes"
+          :current-node-key="activeRouter"
+          :default-expanded-keys="[activeRouter]"
+          :node-key="'path'"
+          :filter="false"
+          accordion
+          :default-expand-all="false"
+          :props="{children:'children',label:'name'}"
+          @node-click="handleNodeClick"
+        ></com-tree>
         <div class="max_height no_scroll_box">
-          <keep-alive>
-            <transition name="contain-fade">
-              <router-view />
-            </transition>
-          </keep-alive>
+          <transition name="contain-fade">
+            <keep-alive>
+              <router-view v-if="$route.meta.keep"></router-view>
+            </keep-alive>
+            <router-view v-if="!$route.meta.keep"></router-view>
+          </transition>
         </div>
       </el-main>
     </el-container>
@@ -60,10 +74,15 @@ import MenuLeft from "./components/MenuLeft";
 import ComHeader from "../header/Index";
 export default {
   name: "Layout",
-  components: { MenuLeft, ComHeader },
+  components: {
+    MenuLeft,
+    ComHeader,
+    comTree: () => import("@/components/tree/Index")
+  },
   data() {
     return {
       routerValue: ""
+      // include: []
     };
   },
   computed: {
@@ -72,17 +91,44 @@ export default {
     },
     routerTabs() {
       return this.$store.state.routerTabs;
+    },
+    include() {
+      return this.routerTabs
+        .filter(item => item.meta.keep)
+        .map(item => item.name);
+    },
+    routes() {
+      // 过滤非菜单路由
+      return this.filterRoute(this.$router.options.routes);
+    },
+    activeRouter() {
+      return this.$route.path;
     }
   },
   watch: {
-    $route(val) {
-      this.initRouter(val.path);
+    $route(to, from) {
+      this.initRouter(to.path);
     }
   },
   mounted() {
     this.initRouter(this.$route.path);
+    // console.log(this.$route.meta);
   },
   methods: {
+    filterRoute(arr) {
+      let fn = arr => {
+        return arr
+          .filter(item => item.meta.showMenu)
+          .map(item => {
+            item = Object.assign({}, item);
+            if (item.children) {
+              item.children = fn(item.children);
+            }
+            return item;
+          });
+      };
+      return fn(arr);
+    },
     initRouter(path) {
       this.routerValue = path;
     },
@@ -108,6 +154,11 @@ export default {
       let _tabList = tabs.filter(tab => tab.path !== path);
 
       this.$store.commit("routerTabs", _tabList);
+    },
+    handleNodeClick(node, vm) {
+      console.log(node);
+      if (node.path === this.$route.path) return;
+      this.$router.push(node.path);
     }
   }
 };
@@ -120,6 +171,9 @@ export default {
     overflow: hidden;
     border-right: 1px solid $headerBorder;
     // height: calc(100% - 60px);
+  }
+  .router-left-tree {
+    display: none;
   }
   .logo-container {
     display: flex;
@@ -178,6 +232,18 @@ export default {
   .el-tabs__item:hover,
   .el-tabs__item.is-active {
     color: #5f9ea0;
+  }
+  @media screen and (max-width: $mediaWidthHide) {
+    .el-main{
+      overflow: hidden;
+    }
+    ._el-aside {
+      display: none;
+    }
+    .router-left-tree {
+      display: block;
+      height: auto;
+    }
   }
   /* 可以设置不同的进入和离开动画 */
   /* 设置持续时间和动画函数 */

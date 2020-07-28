@@ -17,7 +17,8 @@ const router = [
       meta: {
         title: 'vue初始化',
         icon: 'el-icon-tickets',
-        showMenu: true
+        showMenu: true,
+        keep: true
       }
     }, {
       path: '/vueRouter',
@@ -26,7 +27,8 @@ const router = [
       meta: {
         title: 'vue路由配置',
         icon: 'el-icon-tickets',
-        showMenu: true
+        showMenu: true,
+        keep: true
       }
     }, {
       path: '/vueVuex',
@@ -35,7 +37,8 @@ const router = [
       meta: {
         title: 'vuex状态管理',
         icon: 'el-icon-tickets',
-        showMenu: true
+        showMenu: true,
+        keep: true
       }
     }, {
       path: '/vueAxios',
@@ -44,7 +47,8 @@ const router = [
       meta: {
         title: 'axios资源请求',
         icon: 'el-icon-tickets',
-        showMenu: true
+        showMenu: true,
+        keep: true
       }
     }, {
       path: '/vueWebpack',
@@ -53,7 +57,8 @@ const router = [
       meta: {
         title: 'webpack',
         icon: 'el-icon-tickets',
-        showMenu: true
+        showMenu: true,
+        keep: true
       }
     }, {
       path: '/vueDirective',
@@ -62,7 +67,8 @@ const router = [
       meta: {
         title: '指令',
         icon: 'el-icon-tickets',
-        showMenu: true
+        showMenu: true,
+        keep: true
       }
     }, {
       path: '/vueFilters',
@@ -71,7 +77,8 @@ const router = [
       meta: {
         title: '过滤器',
         icon: 'el-icon-tickets',
-        showMenu: true
+        showMenu: true,
+        keep: true
       }
     }, {
       path: '/vueSource',
@@ -80,7 +87,8 @@ const router = [
       meta: {
         title: '源码分析',
         icon: 'el-icon-tickets',
-        showMenu: true
+        showMenu: true,
+        keep: true
       }
     }]
   }]

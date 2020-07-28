@@ -40,7 +40,8 @@ export default new Router({
           meta: {
             title: '首页',
             icon: 'el-icon-tickets',
-            showMenu: true
+            showMenu: true,
+            keep: true
           }
         },
         ...vueRouter,
