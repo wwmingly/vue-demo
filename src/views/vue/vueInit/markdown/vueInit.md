@@ -71,6 +71,9 @@
       4、utils.scss                // 工具类样式
       5、variable.scss             // 样式公共变量
       6、index.scss                // 出口文件
+      很多项目都是通过抽取一个文件，如variable.scss作为一个公共变量文件
+      但是，但是elementUI官方文档也可以自定义主题：https://element.eleme.cn/2.9/#/zh-CN/component/custom-theme
+      本项目主题色采用elementUI提供自定义主题方式
 <slot name="markdown_6"></slot>
 <slot name="title_7"></slot>
     安装路由模块，如果构建工程时已经安装，则跳过
@@ -209,7 +212,26 @@
        按需加载，开启gzip压缩，服务端渲染（ssr）
        通过打包webpack打包是，首页加载文件较小等，参考https://juejin.im/post/5c1fa158f265da613c09cb36
     4、组件、路由懒加载
-    5、一些代码层面优化
+    5、缓存 keep-alive 
+       一般在路由中设定决定是否需要缓存，或者移动端结合vuex等进入详情（无状态改变）等页面先缓存列表页
+       <template>
+        <fragment>
+          <keep-alive>
+            <router-view v-if="$route.meta.keep"></router-view>
+          </keep-alive>
+          <router-view v-if="!$route.meta.keep"></router-view>
+        </fragment>
+      </template>
+      <script>
+      import { Fragment } from "vue-fragment";
+      export default {
+        name: "LayoutContainer",
+        components: { Fragment }
+      };
+      </script>
+      通过vue devtools插件可以看出，缓存起来的节点并未移除，并且状态inactive
+<slot name="images_10"></slot>
+    6、一些代码层面优化
        v-if与v-show的使用场景区别：
           v-if 是 真正 的条件渲染，因为它会确保在切换过程中条件块内的事件监听器和子组件适当地被销毁和重建；也是惰性的：如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块。
           v-show 就简单得多， 不管初始条件是什么，元素总是会被渲染，并且只是简单地基于 CSS 的 display 属性进行切换。

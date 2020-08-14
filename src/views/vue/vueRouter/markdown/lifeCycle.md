@@ -2,20 +2,19 @@
   路由生命周期，也叫路由导航守卫
 <slot name="title_1"></slot>
   let router = new Router();
-  router.beforeEach((to,from,next)=>{       // 全局前置守卫
+  router.beforeEach((to,from,next)=>{                         // 全局前置守卫
     // to           是即将进入的页面（信息）
     // from         是即将离开的页面（信息）
     // next()       是一个方法，必须调用该方法resolve这个钩子，
   })
   next使用方式: 
-    next()                                  // 正常进入下一个钩子
-    next('/login')或者next({path:'/login'}) // 指定进入 path = 'login' 页面
-    next(false)                            // 中断当前导航
-
-  router.beforeResolve((to,from,next)=>{   // 全局解析守卫, 时间触发比 全局前置守卫慢些
+    next()                                     // 正常进入下一个钩子
+    next('/login')或者next({path:'/login'})    // 指定进入 path = 'login' 页面
+    next(false)                                // 中断当前导航
+  router.beforeResolve((to,from,next)=>{                      // 全局解析守卫, 时间触发比 全局前置守卫慢些
     // 参数同beforeEach
   })
-  router.afterEach((to, from) => {}) // 全局后置守卫、钩子，没有next
+  router.afterEach((to, from) => {})                           // 全局后置守卫、钩子，没有next
   ...
 <slot name="title_2"></slot>
   const router = new VueRouter({

@@ -128,6 +128,11 @@
           <template slot="title_10">
             <div class="common_slot-title" ref="position_1_1_10">10、优化</div>
           </template>
+          <template slot="images_10">
+            <div class="common_slot-images">
+              <el-image :src="require('@/assets/images/vueInit/0010.jpg')" fit="fill"></el-image>
+            </div>
+          </template>
           <template slot="title_11">
             <div class="common_slot-title" ref="position_1_1_11">11、效果图</div>
           </template>
